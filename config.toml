@@ -1,0 +1,10 @@
+[core]
+workspace_base = "./workspace"
+
+[llm]
+#model = "claude-3-5-sonnet-20241022"
+#api_key = "your_anthropic_key"
+
+# 또는 로컬 모델 사용
+ model = "ollama/deepseek-coder:33b"
+ base_url = "http://localhost:11434"

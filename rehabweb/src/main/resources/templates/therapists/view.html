@@ -1,0 +1,232 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Therapist Details - RehabWeb</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      nav {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      nav h1 {
+        color: #00bcd4;
+        font-size: 1.8rem;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+        font-weight: 500;
+      }
+
+      nav a:hover {
+        color: #00bcd4;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      h2 {
+        color: white;
+        font-size: 2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        background-color: #667eea;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin-left: 0.5rem;
+      }
+
+      .btn:hover {
+        background-color: #764ba2;
+        transform: translateY(-2px);
+      }
+
+      .btn-danger {
+        background-color: #f44336;
+      }
+
+      .btn-danger:hover {
+        background-color: #d32f2f;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .detail-row {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        padding: 1rem 0;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .detail-row:last-child {
+        border-bottom: none;
+      }
+
+      .detail-label {
+        font-weight: 600;
+        color: #667eea;
+      }
+
+      .detail-value {
+        color: #333;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .status-active {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .status-inactive {
+        background-color: #f44336;
+        color: white;
+      }
+
+      footer {
+        background-color: rgba(0, 0, 0, 0.9);
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1>🏥 RehabWeb</h1>
+      <ul>
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="/patients">Patients</a></li>
+        <li><a href="/therapists">Therapists</a></li>
+        <li><a href="/appointments">Appointments</a></li>
+        <li><a href="/programs">Programs</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="header">
+        <h2>👨‍⚕️ Therapist Details</h2>
+        <div>
+          <a th:href="@{/therapists/{id}/edit(id=${therapist.id})}" class="btn"
+            >Edit</a
+          >
+          <a
+            th:href="@{/therapists/{id}/delete(id=${therapist.id})}"
+            class="btn btn-danger"
+            onclick="return confirm('Are you sure?');"
+            >Delete</a
+          >
+          <a href="/therapists" class="btn" style="background-color: #999"
+            >Back</a
+          >
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="detail-row">
+          <div class="detail-label">First Name:</div>
+          <div class="detail-value" th:text="${therapist.firstName}">-</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Last Name:</div>
+          <div class="detail-value" th:text="${therapist.lastName}">-</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Email:</div>
+          <div class="detail-value" th:text="${therapist.email}">-</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Phone:</div>
+          <div class="detail-value" th:text="${therapist.phone}">-</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Specialization:</div>
+          <div class="detail-value" th:text="${therapist.specialization}">
+            -
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Status:</div>
+          <div class="detail-value">
+            <span
+              th:class="'status-badge status-' + ${#strings.toLowerCase(therapist.status)}"
+              th:text="${therapist.status}"
+              >-</span
+            >
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Qualification:</div>
+          <div
+            class="detail-value"
+            th:text="${therapist.qualification ?: 'N/A'}"
+          >
+            -
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2026 RehabWeb - Physical Rehabilitation Management System. All
+        rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>
